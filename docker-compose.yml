@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:latest
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+      - ./postgresdb/data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_USER: dincer
+      POSTGRES_PASSWORD: degre
+      POSTGRES_DB: dincerdegre
+    ports:
+      - "5432:5432"
+    container_name: postgresdb
+    networks:
+      - dbPostgresNetwork
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 5432
+    depends_on:
+      - postgres
+    container_name: phpmyadmin
+    networks:
+      - dbPostgresNetwork
+networks:
+  dbPostgresNetwork:
