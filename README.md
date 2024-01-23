@@ -1,0 +1,12 @@
+## Docker PostgreSQL Container with PGAdmin (Docker Compose)
+
+```
+POSTGRES_USER=dincerdegre
+POSTGRES_PASSWORD=123456
+POSTGRES_DB=postgres
+POSTGRES_PORT=5432
+PGADMIN_DEFAULT_EMAIL=admin@example.com
+PGADMIN_DEFAULT_PASSWORD=adminpass
+PGADMIN_LISTEN_PORT=5050
+PGADMIN_PORT=5050
+```

@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 services:
   postgres:
     image: postgres:latest
@@ -7,26 +7,26 @@ services:
       - ./postgresdb/data:/var/lib/postgresql/data
     restart: always
     environment:
-      POSTGRES_USER: dincer
-      POSTGRES_PASSWORD: degre
-      POSTGRES_DB: dincerdegre
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5432:5432"
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
     container_name: postgresdb
     networks:
-      - dbPostgresNetwork
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-      - '8080:80'
+      - postgres-network
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: my-pgadmin-container
     environment:
-      PMA_HOST: db
-      PMA_PORT: 5432
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_LISTEN_PORT}
+    ports:
+      - ${PGADMIN_PORT}:${PGADMIN_PORT}
     depends_on:
       - postgres
-    container_name: phpmyadmin
     networks:
-      - dbPostgresNetwork
+      - postgres-network
 networks:
-  dbPostgresNetwork:
+  postgres-network:
